@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"strings"
 
@@ -16,8 +15,6 @@ func CryptocurryencyListingProAPIv1(options *ListOptions) (types.CryptocurrencyL
 	if errGetURL != nil {
 		return nil, errGetURL
 	}
-
-	log.Println(url)
 
 	resp, errMakeReq := makeRequest(url)
 	if errMakeReq != nil {
