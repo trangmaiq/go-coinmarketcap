@@ -22,13 +22,13 @@ type CryptoCurrencyQuote struct {
 }
 
 type PriceCovert struct {
-	Price            float64   `json:"price"`
-	Volume24H        float64   `json:"volume_24h"`
-	PercentChange1H  float64   `json:"percent_change_1h"`
-	PercentChange24H float64   `json:"percent_change_24h"`
-	PercentChange7D  float64   `json:"percent_change_7d"`
-	MarketCap        float64   `json:"market_cap"`
-	LastUpdated      time.Time `json:"last_updated"`
+	Price            float64   `json:"price" bson:"price"`
+	Volume24H        float64   `json:"volume_24h" bson:"volume_24h"`
+	PercentChange1H  float64   `json:"percent_change_1h" bson:"percent_change_1h"`
+	PercentChange24H float64   `json:"percent_change_24h" bson:"percent_change_24h"`
+	PercentChange7D  float64   `json:"percent_change_7d" bson:"percent_change_7d"`
+	MarketCap        float64   `json:"market_cap" bson:"market_cap"`
+	LastUpdated      time.Time `json:"last_updated" bson:"last_updated"`
 }
 
 type CryptocurrencyListing []Cryptocurrency
