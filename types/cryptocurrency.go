@@ -3,7 +3,7 @@ package types
 import "time"
 
 type Cryptocurrency struct {
-	ID                int                 `json:"id" bson:"id"`
+	ID                int                 `json:"id" bson:"_id"`
 	Name              string              `json:"name" bson:"name"`
 	Symbol            string              `json:"symbol" bson:"symbol"`
 	Slug              string              `json:"slug" bson:"slug"`
