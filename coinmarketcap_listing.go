@@ -10,7 +10,7 @@ import (
 	"github.com/whyrans/go-coinmarketcap/types"
 )
 
-func CryptocurryencyListingProAPIv1(options *ListOptions) (types.CryptocurrencyListing, error) {
+func CryptocurryencyListingProAPIv1(options *ListOptions) (*types.CryptocurrencyListingResponse, error) {
 	url, errGetURL := getURL(options)
 	if errGetURL != nil {
 		return nil, errGetURL
@@ -21,12 +21,12 @@ func CryptocurryencyListingProAPIv1(options *ListOptions) (types.CryptocurrencyL
 		return nil, errMakeReq
 	}
 
-	var bodyData types.CryptocurrencyResponse
+	var bodyData types.CryptocurrencyListingResponse
 	if err := json.Unmarshal(resp, &bodyData); err != nil {
 		return nil, err
 	}
 
-	return bodyData.Data, nil
+	return &bodyData, nil
 }
 
 func getURL(options *ListOptions) (string, error) {
