@@ -3,7 +3,6 @@ package coinmarketcap
 type Option struct {
 	ListOptions
 	InfoOptions
-	ApiKey string
 }
 type ListOptions struct {
 	Start              int
@@ -12,9 +11,11 @@ type ListOptions struct {
 	Sort               string
 	SortDir            string
 	CryptocurrencyType string
+	ApiKey             string
 }
 
 type InfoOptions struct {
 	ID     int
 	Symbol string
+	ApiKey string
 }
