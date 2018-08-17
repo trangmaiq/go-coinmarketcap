@@ -13,15 +13,14 @@ var optionsCryptocurrencyListing = ListOptions{
 	ApiKey:             "YOUR_API_KEY",
 }
 
-func TestTokenListingProAPIv1(t *testing.T) {
+func TestCryptocurryencyListingProAPIv1(t *testing.T) {
 	type args struct {
 		options *ListOptions
 	}
-
 	tests := []struct {
 		name string
 		args args
-		// want    *types.CryptocurrencyListing
+		// want    *types.CryptocurrencyListingResponse
 		wantErr bool
 	}{
 		{"Token Listing 1-100", args{&optionsCryptocurrencyListing}, false},
