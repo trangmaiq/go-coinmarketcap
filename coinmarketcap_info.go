@@ -6,8 +6,9 @@ import (
 	"github.com/whyrans/go-coinmarketcap/types"
 )
 
-func CryptocurryencyInfoProAPIv1(options *Option) (*types.CryptocurrencyInfoResponse, error) {
+func CryptocurryencyInfoProAPIv1(options *ListOptions) (*types.CryptocurrencyInfoResponse, error) {
 	url, errGetURL := getURL(options)
+
 	if errGetURL != nil {
 		return nil, errGetURL
 	}
