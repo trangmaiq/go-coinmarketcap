@@ -65,7 +65,3 @@ type PriceCovert struct {
 }
 
 type CryptocurrencyListing []Cryptocurrency
-type CryptocurrencyResponse struct {
-	Status StatusResponse        `json:"status"`
-	Data   CryptocurrencyListing `json:"data"`
-}
