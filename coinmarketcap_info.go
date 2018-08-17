@@ -7,7 +7,7 @@ import (
 )
 
 func CryptocurryencyInfoProAPIv1(options *InfoOptions) (*types.CryptocurrencyInfoResponse, error) {
-	url, errGetURL := getURL(&Option{InfoOptions: *options})
+	url, errGetURL := getInfoURL(options)
 
 	if errGetURL != nil {
 		return nil, errGetURL

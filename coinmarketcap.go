@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func getURL(options *Option) (string, error) {
+func getListingURL(options *ListOptions) (string, error) {
 	var params []string
 
 	if options.Sort != "" {
@@ -25,12 +25,21 @@ func getURL(options *Option) (string, error) {
 	if options.Convert != "" {
 		params = append(params, fmt.Sprintf("convert=%v", options.Convert))
 	}
+
 	if options.ApiKey != "" {
 		params = append(params, fmt.Sprintf("CMC_PRO_API_KEY=%v", options.ApiKey))
 	}
 	if options.SortDir != "" {
 		params = append(params, fmt.Sprintf("sort_dir=%v", options.SortDir))
 	}
+
+	url := fmt.Sprintf("%s/cryptocurrency/listings/latest?%s", PRO_API_URL, strings.Join(params, "&"))
+	return url, nil
+}
+
+func getInfoURL(options *InfoOptions) (string, error) {
+	var params []string
+
 	if options.ID >= 1 {
 		params = append(params, fmt.Sprintf("id=%v", options.ID))
 	}
@@ -38,7 +47,11 @@ func getURL(options *Option) (string, error) {
 		params = append(params, fmt.Sprintf("symbol=%v", options.Symbol))
 	}
 
-	url := fmt.Sprintf("%s/cryptocurrency/listings/latest?%s", PRO_API_URL, strings.Join(params, "&"))
+	if options.ApiKey != "" {
+		params = append(params, fmt.Sprintf("CMC_PRO_API_KEY=%v", options.ApiKey))
+	}
+
+	url := fmt.Sprintf("%s/cryptocurrency/info?%s", PRO_API_URL, strings.Join(params, "&"))
 	return url, nil
 }
 

@@ -7,7 +7,7 @@ import (
 )
 
 func CryptocurryencyListingProAPIv1(options *ListOptions) (*types.CryptocurrencyListingResponse, error) {
-	url, errGetURL := getURL(&Option{ListOptions: *options})
+	url, errGetURL := getListingURL(options)
 	if errGetURL != nil {
 		return nil, errGetURL
 	}
