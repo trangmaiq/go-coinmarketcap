@@ -18,7 +18,40 @@ type Cryptocurrency struct {
 }
 
 type CryptoCurrencyQuote struct {
-	USD PriceCovert `json:"USD"`
+	Bitcoin            PriceCovert `json:"BTC"`
+	Ethereum           PriceCovert `json:"ETH"`
+	UnitedStatesDollar PriceCovert `json:"USD"`
+	AustralianDollar   PriceCovert `json:"AUD"`
+	BrazilianReal      PriceCovert `json:"BRL"`
+	CanadianDollar     PriceCovert `json:"CAD"`
+	SwissFranc         PriceCovert `json:"CHF"`
+	ChileanPeso        PriceCovert `json:"CLP"`
+	ChineseYuan        PriceCovert `json:"CNY"`
+	CzechKoruna        PriceCovert `json:"CZK"`
+	DanishKrone        PriceCovert `json:"DKK"`
+	Euro               PriceCovert `json:"EUR"`
+	BritishPound       PriceCovert `json:"GBP"`
+	HongKongDollar     PriceCovert `json:"HKD"`
+	HungarianForint    PriceCovert `json:"HUF"`
+	IndonesianRupiah   PriceCovert `json:"IDR"`
+	IsraeliNewShekel   PriceCovert `json:"ILS"`
+	IndianRupee        PriceCovert `json:"INR"`
+	JapaneseYen        PriceCovert `json:"JPY"`
+	SouthKoreanWon     PriceCovert `json:"KRW"`
+	MexicanPeso        PriceCovert `json:"MXN"`
+	MalaysianRinggit   PriceCovert `json:"MYR"`
+	NorwegianKrone     PriceCovert `json:"NOK"`
+	NewZealandDollar   PriceCovert `json:"NZD"`
+	PhilippinePiso     PriceCovert `json:"PHP"`
+	PakistaniRupee     PriceCovert `json:"PKR"`
+	PolishZLoty        PriceCovert `json:"PLN"`
+	RussianRuble       PriceCovert `json:"RUB"`
+	SwedishKrona       PriceCovert `json:"SEK"`
+	SingaporeDollar    PriceCovert `json:"SGD"`
+	ThaiBaht           PriceCovert `json:"THB"`
+	TurkishLira        PriceCovert `json:"TRY"`
+	NewTaiwanDollar    PriceCovert `json:"TWD"`
+	SouthAfricanRand   PriceCovert `json:"ZAR"`
 }
 
 type PriceCovert struct {
