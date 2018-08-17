@@ -17,4 +17,5 @@ type ListOptions struct {
 type InfoOptions struct {
 	ID     int
 	Symbol string
+	ApiKey string
 }
