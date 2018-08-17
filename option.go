@@ -9,3 +9,8 @@ type ListOptions struct {
 	CryptocurrencyType string
 	ApiKey             string
 }
+
+type InfoOptions struct {
+	ID     int
+	Symbol string
+}
