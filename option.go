@@ -1,5 +1,9 @@
 package coinmarketcap
 
+type Option struct {
+	ListOptions
+	InfoOptions
+}
 type ListOptions struct {
 	Start              int
 	Limit              int
