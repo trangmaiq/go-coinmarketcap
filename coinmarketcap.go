@@ -34,7 +34,7 @@ const (
 type Client struct {
 	client    *http.Client // Http Client use to communicate with the API.
 	BaseURL   *url.URL     // BaseURL for API request.
-	SearchURL *url.URL     //URL for search information request.
+	SearchURL *url.URL     // SearchURL for search information request.
 
 	// Services used for talking to different parts of the Coinmarketcap API.
 	Cryptocurrency *CryptocurrencyService
@@ -42,6 +42,8 @@ type Client struct {
 	// GlobalMetrics  *GlobalMetricsService
 	// Tools          *ToolsService
 	Search *SearchService
+
+	rateLimit *RateLimit // Rate limits for the client as determined by the most recent API calls.
 }
 
 type service struct {
@@ -191,7 +193,6 @@ func (c *Client) Do(ctx context.Context, req *http.Request, v interface{}) (*Res
 	}
 
 	response := newResponse(resp)
-
 	defer resp.Body.Close()
 
 	body, errReadBody := ioutil.ReadAll(resp.Body)
@@ -199,7 +200,7 @@ func (c *Client) Do(ctx context.Context, req *http.Request, v interface{}) (*Res
 		return nil, err
 	}
 
-	if 200 != resp.StatusCode {
+	if resp.StatusCode != ResponseSuccessful {
 		return nil, fmt.Errorf("%s", body)
 	}
 
@@ -217,7 +218,6 @@ type Response struct {
 }
 
 type Rate struct {
-
 	// The number of requests per hour the client is currenly limited to.
 	Limit int `json:"limit"`
 
