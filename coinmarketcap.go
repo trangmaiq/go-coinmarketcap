@@ -200,4 +200,3 @@ func newResponse(resHttp *http.Response) *Response {
 type ExchangeService service
 type GlobalMetricsService service
 type ToolsService service
-type SearchService service
