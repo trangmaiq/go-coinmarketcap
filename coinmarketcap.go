@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"strings"
@@ -14,9 +15,13 @@ import (
 )
 
 const (
-	defaultBaseURL = "https://pro-api.coinmarketcap.com/"
-	sanboxBaseURL  = "https://sandbox-api.coinmarketcap.com/"
-	defalutVerAPI  = "v1/"
+	defaultBaseURL     = "https://pro-api.coinmarketcap.com/"
+	defaultSearchURL   = "https://pro.coinmarketcap.com/"
+	defalutVerAPI      = "v1/"
+	searchInforAPIPath = "api/"
+
+	sanboxBaseURL   = "https://sandbox-api.coinmarketcap.com/"
+	sanboxSearchURL = "https://sandbox.coinmarketcap.com/"
 
 	ResponseSuccessful     = 200
 	ResponseBadRequest     = 400
@@ -27,8 +32,9 @@ const (
 )
 
 type Client struct {
-	client  *http.Client // Http Client use to communicate with the API.
-	BaseURL *url.URL     // BaseURL for API request.
+	client    *http.Client // Http Client use to communicate with the API.
+	BaseURL   *url.URL     // BaseURL for API request.
+	SearchURL *url.URL     //URL for search information request.
 
 	// Services used for talking to different parts of the Coinmarketcap API.
 	Cryptocurrency *CryptocurrencyService
@@ -73,14 +79,18 @@ type ListOptions struct {
 
 func NewDefaultClient() *Client {
 	// For testing
-	// URL := sanboxBaseURL + defalutVerAPI
+	urlAPI := sanboxBaseURL + defalutVerAPI
+	urlSearch := sanboxSearchURL + searchInforAPIPath
 
-	URL := defaultBaseURL + defalutVerAPI
+	// urlAPI := defaultBaseURL + defalutVerAPI
+	// urlSearch := defaultSearchURL + searchInforAPIPath
 
-	baseURL, _ := url.Parse(URL)
+	baseURL, _ := url.Parse(urlAPI)
+	searchURL, _ := url.Parse(urlSearch)
 	c := &Client{
-		client:  http.DefaultClient,
-		BaseURL: baseURL,
+		client:    http.DefaultClient,
+		BaseURL:   baseURL,
+		SearchURL: searchURL,
 	}
 
 	c.Cryptocurrency = &CryptocurrencyService{client: c}
@@ -130,6 +140,39 @@ func (c *Client) NewRequest(method, urlString string, body interface{}) (*http.R
 		}
 	}
 
+	log.Println(u.String())
+	req, err := http.NewRequest(method, u.String(), buf)
+	if err != nil {
+		return nil, err
+	}
+
+	if body != nil {
+		req.Header.Set("Content-Type", "application/json")
+	}
+	return req, nil
+}
+
+func (c *Client) NewSearchRequest(method, urlString string, body interface{}) (*http.Request, error) {
+	if !strings.HasSuffix(c.SearchURL.Path, "/") {
+		return nil, fmt.Errorf("Base URL must have a trailing slash, but %s does not.", c.SearchURL)
+	}
+
+	u, errParse := c.SearchURL.Parse(urlString)
+	if errParse != nil {
+		return nil, errParse
+	}
+
+	var buf io.ReadWriter
+	if body != nil {
+		buf = new(bytes.Buffer)
+		enc := json.NewEncoder(buf)
+		err := enc.Encode(body)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	log.Println(u.String())
 	req, err := http.NewRequest(method, u.String(), buf)
 	if err != nil {
 		return nil, err
@@ -155,6 +198,7 @@ func (c *Client) Do(ctx context.Context, req *http.Request, v interface{}) (*Res
 	if errReadBody != nil {
 		return nil, err
 	}
+
 	if 200 != resp.StatusCode {
 		return nil, fmt.Errorf("%s", body)
 	}
