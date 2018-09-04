@@ -26,11 +26,11 @@ type CryptocurrencyResponse struct {
 }
 
 type Status struct {
-	Timestamp    string `json:"timestamp"`
-	ErrorCode    int    `json:"error_code"`
-	ErrorMessage string `json:"error_message"`
-	Elapsed      int    `json:"elapsed"`
-	CreditCount  int    `json:"credit_count"`
+	Timestamp    string `json:"timestamp" bson:"timestamp"`
+	ErrorCode    int    `json:"error_code" bson:"error_code"`
+	ErrorMessage string `json:"error_message" bson:"error_message"`
+	Elapsed      int    `json:"elapsed" bson:"elapsed"`
+	CreditCount  int    `json:"credit_count" bson:"credit_count"`
 }
 
 type Cryptocurrency struct {
@@ -156,9 +156,9 @@ func (cs *CryptocurrencyService) List(ctx context.Context, endPointPath string, 
 	}
 
 	cryptocurrency := &CryptocurrencyResponse{}
-	resp, errResq := cs.client.Do(ctx, req, &cryptocurrency)
-	if errResq != nil {
-		return nil, nil, errResq
+	resp, errResp := cs.client.Do(ctx, req, &cryptocurrency)
+	if errResp != nil {
+		return nil, nil, errResp
 	}
 
 	return cryptocurrency.Data, resp, nil
