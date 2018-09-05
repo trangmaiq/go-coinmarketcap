@@ -43,7 +43,12 @@ type Client struct {
 	// Tools          *ToolsService
 	Search *SearchService
 
-	rateLimit *RateLimit // Rate limits for the client as determined by the most recent API calls.
+	RateLimit *RateLimit // Rate limits for the client as determined by the most recent API calls.
+	config    *ConfigService
+}
+
+type ConfigService struct {
+	AutoCheckRateLimit bool
 }
 
 type service struct {
@@ -81,11 +86,11 @@ type ListOptions struct {
 
 func NewDefaultClient() *Client {
 	// For testing
-	urlAPI := sanboxBaseURL + defalutVerAPI
-	urlSearch := sanboxSearchURL + searchInforAPIPath
+	// urlAPI := sanboxBaseURL + defalutVerAPI
+	// urlSearch := sanboxSearchURL + searchInforAPIPath
 
-	// urlAPI := defaultBaseURL + defalutVerAPI
-	// urlSearch := defaultSearchURL + searchInforAPIPath
+	urlAPI := defaultBaseURL + defalutVerAPI
+	urlSearch := defaultSearchURL + searchInforAPIPath
 
 	baseURL, _ := url.Parse(urlAPI)
 	searchURL, _ := url.Parse(urlSearch)
@@ -93,6 +98,9 @@ func NewDefaultClient() *Client {
 		client:    http.DefaultClient,
 		BaseURL:   baseURL,
 		SearchURL: searchURL,
+		config: &ConfigService{
+			AutoCheckRateLimit: false,
+		},
 	}
 
 	c.Cryptocurrency = &CryptocurrencyService{client: c}
@@ -234,6 +242,18 @@ type RateLimit struct {
 
 	// The rate limit for search API requests.
 	Search *Rate
+}
+
+func (rl *RateLimit) SetCoreRate(limit int, remaining int, reset time.Time) {
+	rl.Core.Limit = limit
+	rl.Core.Remaining = remaining
+	rl.Core.Reset = reset
+}
+
+func (rl *RateLimit) SetSearchRate(limit int, remaining int, reset time.Time) {
+	rl.Search.Limit = limit
+	rl.Search.Remaining = remaining
+	rl.Search.Reset = reset
 }
 
 // Todo: Get rateLimit for requests

@@ -140,7 +140,6 @@ func (opt *ListOptions) addParamsOpts(u string) string {
 }
 
 func (cs *CryptocurrencyService) List(ctx context.Context, endPointPath string, opt *ListOptions) ([]*Cryptocurrency, *Response, error) {
-
 	var u string
 	if endPointPath != "" {
 		u = fmt.Sprintf("cryptocurrency/listings/%s", endPointPath)
