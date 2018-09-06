@@ -64,7 +64,7 @@ type MarketPair struct {
 }
 
 type Exchange struct {
-	ID     *int    `json:"id,omitempty"`
+	ID     *int    `json:"id,omitempty" bson:"id,omitempty"`
 	Name   *string `json:"name,omitempty" bson:"name,omitempty"`
 	Symbol *string `json:"symbol,omitempty" bson:"symbol,omitempty"`
 }

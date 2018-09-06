@@ -8,6 +8,14 @@ const (
 	DailyCreditLimitStarter       = 200
 	MonthlyCreditLimitStarter     = 6000
 	ApiCallRateLimitStarterPerMin = 10
+
+	DailyCreditLimitHobbyist       = 2000
+	MonthlyCreditLimitHobbyist     = 60000
+	ApiCallRateLimitHobbyistPerMin = 30
+
+	DailyCreditLimitStandard       = 10000
+	MonthlyCreditLimitStandard     = 300000
+	ApiCallRateLimitStandardPerMin = 30
 )
 
 const (
