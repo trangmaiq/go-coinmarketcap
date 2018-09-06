@@ -96,6 +96,7 @@ type Currency struct {
 	PercentChange24h *float64 `json:"percent_change_24h,omitempty" bson:"percent_change_24h,omitempty"`
 	PercentChange7d  *float64 `json:"percent_change_7d,omitempty" bson:"percent_change_7d,omitempty"`
 	MarketCap        *float64 `json:"market_cap,omitempty" bson:"market_cap,omitempty"`
+	LastUpdated      *string  `json:"last_updated,omitempty" bson:"last_updated,omitempty"`
 }
 
 type URL struct {

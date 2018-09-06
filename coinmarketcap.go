@@ -29,6 +29,9 @@ const (
 	ResponseForbidden      = 403
 	ReponseTooManyRequest  = 429
 	ResponseInternalServer = 500
+
+	MinLimitOption = 1
+	MaxLimitOption = 5000
 )
 
 type Client struct {
@@ -86,11 +89,11 @@ type ListOptions struct {
 
 func NewDefaultClient() *Client {
 	// For testing
-	// urlAPI := sanboxBaseURL + defalutVerAPI
-	// urlSearch := sanboxSearchURL + searchInforAPIPath
+	urlAPI := sanboxBaseURL + defalutVerAPI
+	urlSearch := sanboxSearchURL + searchInforAPIPath
 
-	urlAPI := defaultBaseURL + defalutVerAPI
-	urlSearch := defaultSearchURL + searchInforAPIPath
+	// urlAPI := defaultBaseURL + defalutVerAPI
+	// urlSearch := defaultSearchURL + searchInforAPIPath
 
 	baseURL, _ := url.Parse(urlAPI)
 	searchURL, _ := url.Parse(urlSearch)
