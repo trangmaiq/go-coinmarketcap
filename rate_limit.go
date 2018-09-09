@@ -16,11 +16,16 @@ const (
 	DailyCreditLimitStandard       = 10000
 	MonthlyCreditLimitStandard     = 300000
 	ApiCallRateLimitStandardPerMin = 30
+
+	DailyCreditLimitProfessional       = 100000
+	MonthlyCreditLimitProfessional     = 3000000
+	ApiCallRateLimitProfessionalPerMin = 60
 )
 
 const (
 	Starter CmcPlan = iota
 	Hobbyist
+	Standard
 	Professional
 	Enterprise
 )
@@ -55,7 +60,24 @@ func CalculateCreditLimitWithPlan(opt *PlanOptions) *CreditLimit {
 			MonthlyCreditLimit: numberKeys * MonthlyCreditLimitStarter,
 			APICallRateLimit:   numberKeys * ApiCallRateLimitStarterPerMin,
 		}
-	// Todo: Add another plan
+	case int(Hobbyist):
+		return &CreditLimit{
+			DailyCreditLimit:   numberKeys * DailyCreditLimitHobbyist,
+			MonthlyCreditLimit: numberKeys * MonthlyCreditLimitHobbyist,
+			APICallRateLimit:   numberKeys * ApiCallRateLimitHobbyistPerMin,
+		}
+	case int(Standard):
+		return &CreditLimit{
+			DailyCreditLimit:   numberKeys * DailyCreditLimitStandard,
+			MonthlyCreditLimit: numberKeys * MonthlyCreditLimitStandard,
+			APICallRateLimit:   numberKeys * ApiCallRateLimitStandardPerMin,
+		}
+	case int(Professional):
+		return &CreditLimit{
+			DailyCreditLimit:   numberKeys * DailyCreditLimitProfessional,
+			MonthlyCreditLimit: numberKeys * MonthlyCreditLimitProfessional,
+			APICallRateLimit:   numberKeys * ApiCallRateLimitProfessionalPerMin,
+		}
 	default:
 		return nil
 	}
